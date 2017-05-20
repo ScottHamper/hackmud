@@ -1,2 +1,2 @@
-# hackmud
-ｈａｃｋｍｕｄ scripts
+# ｈａｃｋｍｕｄ scripts
+**Warning:** spoilers lie beyond here
