@@ -2,6 +2,7 @@ function (
     // ═════════════════════════════════════════════════════════════
     //            Pro T1p - T1 lock cracker for ｈａｃｋｍｕｄ 
     // ═════════════════════════════════════════════════════════════
+    //            https://github.com/ScottHamper/hackmud
     //
     // I created this script as a challenge to see how much T1
     // cracker functionality I could pack into a single <= 500 char
