@@ -56,7 +56,7 @@ function (
         E: s`release1open1unlock`,
         
         // digit (EZ_35)
-        d: d,
+        d,
         
         // ez_prime (EZ_40)
         e: d.filter(d => d > 1 & [2, 3, 5, 7].every(p => d == p | d % p)),
