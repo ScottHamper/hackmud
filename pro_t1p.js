@@ -47,8 +47,6 @@ function (
     // Function that maps string lines into an array of numbers
     n = a => s(a).map(l => l.length),
 
-    m = 'match',
-
     // Colors
     c = s`red
 orange
@@ -125,17 +123,17 @@ sa23uw
         // - "`NLOCK_UNLOCKED`\nConnection terminated."
         // - "`NLOCK_UNLOCKED` {LOCK}\n`VLOCK_ERROR`\nDenied access by {MANUFACTURER} `N{LOCK}` lock."
         // Only the "Connection terminated" response has "nn" in it.
-        !r[m]`nn`;
+        !r.match`nn`;
 
         // This happens after the loop body below.
         // Gets the appropriate key array for the current lock,
         // and brute forces the lock.
         z = (p[l[0]] || (
-            l[m]`_` ? [
-                l[3] > 1 ?
+            l[4] ? [
+                +l[3] ?
 
                 // c003_triad_x or c002_complement
-                c[(c.indexOf(z) + 4 + +l[l[3] > 2 ? 11 : 1]) % 8]
+                c[(c.indexOf(z) + (l[11]|4)) % 8]
 
                 // color_digit
                 : z.length
@@ -148,11 +146,11 @@ sa23uw
         // the current lock/parameter, and short-circuits once
         // it finds the correct value.
         // Only the "is not the correct {PARAMETER}" message contains "th".
-        )).find(v => !(p[l] = v, r = t(p))[m]`th`)
+        )).find(v => !(p[l] = v, r = t(p)).match`th`)
     )
         // Find the last blue-colored word in the last line of output.
         // This should be the name of the next lock/parameter to crack,
         // but will throw an exception if the loc no longer exists or
         // is currently breached.
-        [,l] = r[m](".*`N(.*?)`.*$")
+        [,l] = r.match`N(\\w+).*$`
 }
