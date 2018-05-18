@@ -40,79 +40,89 @@ function (
     // Target loc to crack
     t = r.t.call,
 
-    // Function to split string lines
-    s = a => a[0].split`
-`,
-
-    // Function that maps string lines into an array of numbers
-    n = a => s(a).map(l => l.length),
+    // Template string tag function that decodes whitespace into an array of "normal" strings.
+    w = s => s[0].replace(/./g, c => c < ' ' | 0).split`
+`.map(w => w.replace(/.{6}/g, c=> ('0b' + c | 0).toString(36))),
 
     // Colors
-    c = s`red
-orange
-yellow
-lime
-green
-cyan
-blue
-purple`,
+    // ["red", "orange", "yellow", "lime", "green", "cyan", "blue", "purple"]
+    c = w` 		 		  			   		 	
+ 		    		 		  	 	  	 			 	      			 
+	   	   			  	 	 	 	 	 	 		   	     
+ 	 	 	 	  	  	 		   			 
+ 	     		 		  			   			  	 			
+  		  	   	   	 	  	 			
+  	 		 	 	 	 				   			 
+ 		  	 				  		 		 		  	 	 	 	  			 
+ 		 		  			   		 	
+ 		    		 		  	 	  	 			 	      			 
+	   	   			  	 	 	 	 	 	 		   	     
+ 	 	 	 	  	  	 		   			 
+ 	     		 		  			   			  	 			
+  		  	   	   	 	  	 			
+  	 		 	 	 	 				   			 
+ 		  	 				  		 		 		  	 	 	 	  			 `,
 
     // Parameters/passphrases for lock;
     // Storage for lock key collections
     p = {
         // EZ_21, EZ_35, EZ_40
-        E: s`release
-open
-unlock`,
+        // ["release", "open", "unlock"]
+        E: w` 		 		  			  	 	 	  			   	 	  			    			 
+ 		    		  	  			  	 			
+ 				  	 			 	 	 	 		     		   	 	  `,
 
         // digit (EZ_35)
-        d: n`
- 
-  
-   
-    
-     
-      
-       
-        
-         `,
+        // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        d: w`      
+     	
+    	 
+    		
+   	  
+   	 	
+   		 
+   			
+  	   
+  	  	`.map(n=>+n),
 
         // ez_prime (EZ_40)
-        e: n`  
-   
-     
-       
-           
-             
-                 
-                   
-                       
-                             
-                               
-                                     
-                                         
-                                           
-                                               
-                                                     
-                                                           
-                                                             
-                                                                   
-                                                                       
-                                                                         
-                                                                               
-                                                                                   
-                                                                                         
-                                                                                                 `,
+        // [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+        e: w`    	 
+    		
+   	 	
+   			
+     	     	
+     	    		
+     	   			
+     	  	  	
+    	     		
+    	   	  	
+    		     	
+    		   			
+   	       	
+   	      		
+   	     			
+   	 	    		
+   	 	  	  	
+   		      	
+   		    			
+   			     	
+   			    		
+   			  	  	
+  	       		
+  	     	  	
+  	  	   			`.map(n=>+n),
 
         // l0cket
-        l: s`vc2c7q
-cmppiq
-tvfkyq
-uphlaw
-6hh8xw
-xwz7ja
-sa23uw
-72umy0`
+        // ["vc2c7q", "cmppiq", "tvfkyq", "uphlaw", "6hh8xw", "xwz7ja", "sa23uw", "72umy0"]
+        l: w` 					  		      	   		     			 		 	 
+  		   	 		  		  	 		  	 	  	  		 	 
+ 			 	 					  				 	 	  	   	  		 	 
+ 				  		  	 	   	 	 	 	  	 	 	     
+   		  	   	 	   	  	   	    		     
+	    		     	   		   			 	  		  	 	 
+ 			    	 	     	     		 				 	     
+   			    	  				  	 		 	   	       `
     }
 ) {
     // Get an initial response from the target to kick things off.
@@ -133,7 +143,7 @@ sa23uw
                 +l[3] ?
 
                 // c003_triad_x or c002_complement
-                c[(c.indexOf(z) + (l[11]|4)) % 8]
+                c[c.indexOf(z) + (l[11]|4)]
 
                 // color_digit
                 : z.length
