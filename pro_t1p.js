@@ -132,20 +132,20 @@ function (
         // - "`NLOCK_UNLOCKED`\nConnection terminated."
         // - "`NLOCK_UNLOCKED` {LOCK}\n`VLOCK_ERROR`\nDenied access by {MANUFACTURER} `N{LOCK}` lock."
         // Only the "Connection terminated" response has "nn" in it.
-        !r.match`nn`;
+        !r[w` 	 		   	 	  			 	  		   	   	`]`nn`;
 
         // This happens after the loop body below.
         // Gets the appropriate key array for the current lock,
         // and brute forces the lock.
-        z = (p[a[0]] || (
-            a[4] ? [
+        z = (a[4] ? p[a[0]] || 
+             [
                 +a[3] ?
 
                 // c003_triad_x or c002_complement
                 c[c.indexOf(z) + (a[11]|4)]
 
                 // color_digit
-                : z.length
+                : z[w` 	 	 	  			  	 			 	     			 	 	   	`]
             ]
 
             // c00x
@@ -155,11 +155,11 @@ function (
         // the current lock/parameter, and short-circuits once
         // it finds the correct value.
         // Only the "is not the correct {PARAMETER}" message contains "th".
-        )).find(v => !(p[a] = v, r = t(p)).match`th`)
+        ).find(v => !(p[a] = v, r = t(p))[w` 	 		   	 	  			 	  		   	   	`]`th`)
     )
         // Find the last blue-colored word in the last line of output.
         // This should be the name of the next lock/parameter to crack,
         // but will throw an exception if the loc no longer exists or
         // is currently breached.
-        [,a] = r.match`N(\\w+).*$`
+        [,a] = r[w` 	 		   	 	  			 	  		   	   	`]`N(\\w+).*$`
 }
