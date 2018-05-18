@@ -43,7 +43,8 @@ function (
 `.map(w => w.replace(/.{6}/g, c => ('0b' + c | 0).toString(36))),
 
     // Colors
-    // ["red", "orange", "yellow", "lime", "green", "cyan", "blue", "purple"]
+    // ["red", "orange", "yellow", "lime", "green", "cyan", "blue", "purple",
+    //  "red", "orange", "yellow", "lime", "green", "cyan", "blue", "purple"]
     c = w` 		 		  			   		 	
  		    		 		  	 	  	 			 	      			 
 	   	   			  	 	 	 	 	 	 		   	     
