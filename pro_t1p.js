@@ -25,6 +25,7 @@ function (
     //        │ l0cket │  1   │   8   │  1   │   8   │
     //        └────────┴──────┴───────┴──────┴───────┘
     //
+    // NOTE: This script will only work when set as private.
     // ─────────────────────────────────────────────────────────────
 
     // Key for previous cracked lock/parameter
@@ -34,15 +35,12 @@ function (
     // Response from target
     r,
 
-    // Name of the current lock
-    l,
-
     // Target loc to crack
     t = r.t.call,
 
     // Template string tag function that decodes whitespace into an array of "normal" strings.
     w = s => s[0].replace(/./g, c => c < ' ' | 0).split`
-`.map(w => w.replace(/.{6}/g, c=> ('0b' + c | 0).toString(36))),
+`.map(w => w.replace(/.{6}/g, c => ('0b' + c | 0).toString(36))),
 
     // Colors
     // ["red", "orange", "yellow", "lime", "green", "cyan", "blue", "purple"]
@@ -138,12 +136,12 @@ function (
         // This happens after the loop body below.
         // Gets the appropriate key array for the current lock,
         // and brute forces the lock.
-        z = (p[l[0]] || (
-            l[4] ? [
-                +l[3] ?
+        z = (p[a[0]] || (
+            a[4] ? [
+                +a[3] ?
 
                 // c003_triad_x or c002_complement
-                c[c.indexOf(z) + (l[11]|4)]
+                c[c.indexOf(z) + (a[11]|4)]
 
                 // color_digit
                 : z.length
@@ -156,11 +154,11 @@ function (
         // the current lock/parameter, and short-circuits once
         // it finds the correct value.
         // Only the "is not the correct {PARAMETER}" message contains "th".
-        )).find(v => !(p[l] = v, r = t(p)).match`th`)
+        )).find(v => !(p[a] = v, r = t(p)).match`th`)
     )
         // Find the last blue-colored word in the last line of output.
         // This should be the name of the next lock/parameter to crack,
         // but will throw an exception if the loc no longer exists or
         // is currently breached.
-        [,l] = r.match`N(\\w+).*$`
+        [,a] = r.match`N(\\w+).*$`
 }
