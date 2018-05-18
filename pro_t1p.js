@@ -40,88 +40,88 @@ function (
 
     // Template string tag function that decodes whitespace into an array of "normal" strings.
     w = s => s[0].replace(/./g, c => c < ' ' | 0).split`
-`.map(w => w.replace(/.{6}/g, c => ('0b' + c | 0).toString(36))),
+`.map(w => w.replace(/.{8}/g, c => String.fromCharCode('0b' + c))),
 
     // Colors
     // ["red", "orange", "yellow", "lime", "green", "cyan", "blue", "purple",
     //  "red", "orange", "yellow", "lime", "green", "cyan", "blue", "purple"]
-    c = w` 		 		  			   		 	
- 		    		 		  	 	  	 			 	      			 
-	   	   			  	 	 	 	 	 	 		   	     
- 	 	 	 	  	  	 		   			 
- 	     		 		  			   			  	 			
-  		  	   	   	 	  	 			
-  	 		 	 	 	 				   			 
- 		  	 				  		 		 		  	 	 	 	  			 
- 		 		  			   		 	
- 		    		 		  	 	  	 			 	      			 
-	   	   			  	 	 	 	 	 	 		   	     
- 	 	 	 	  	  	 		   			 
- 	     		 		  			   			  	 			
-  		  	   	   	 	  	 			
-  	 		 	 	 	 				   			 
- 		  	 				  		 		 		  	 	 	 	  			 `,
+    c = w` 			  	  		  	 	 		  	  
+ 		 				 			  	  		    	 		 			  		  			 		  	 	
+ 				  	 		  	 	 		 		   		 		   		 				 			 			
+ 		 		   		 	  	 		 		 	 		  	 	
+ 		  			 			  	  		  	 	 		  	 	 		 			 
+ 		   		 				  	 		    	 		 			 
+ 		   	  		 		   			 	 	 		  	 	
+ 			     			 	 	 			  	  			     		 		   		  	 	
+ 			  	  		  	 	 		  	  
+ 		 				 			  	  		    	 		 			  		  			 		  	 	
+ 				  	 		  	 	 		 		   		 		   		 				 			 			
+ 		 		   		 	  	 		 		 	 		  	 	
+ 		  			 			  	  		  	 	 		  	 	 		 			 
+ 		   		 				  	 		    	 		 			 
+ 		   	  		 		   			 	 	 		  	 	
+ 			     			 	 	 			  	  			     		 		   		  	 	`,
 
     // Parameters/passphrases for lock;
     // Storage for lock key collections
     p = {
         // EZ_21, EZ_35, EZ_40
         // ["release", "open", "unlock"]
-        E: w` 		 		  			  	 	 	  			   	 	  			    			 
- 		    		  	  			  	 			
- 				  	 			 	 	 	 		     		   	 	  `,
+        E: w` 			  	  		  	 	 		 		   		  	 	 		    	 			  		 		  	 	
+ 		 				 			     		  	 	 		 			 
+ 			 	 	 		 			  		 		   		 				 		   		 		 	 		`,
 
         // digit (EZ_35)
         // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        d: w`      
-     	
-    	 
-    		
-   	  
-   	 	
-   		 
-   			
-  	   
-  	  	`.map(n=>+n),
+        d: w`  		    
+  		   	
+  		  	 
+  		  		
+  		 	  
+  		 	 	
+  		 		 
+  		 			
+  			   
+  			  	`.map(n=>+n),
 
         // ez_prime (EZ_40)
         // [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
-        e: w`    	 
-    		
-   	 	
-   			
-     	     	
-     	    		
-     	   			
-     	  	  	
-    	     		
-    	   	  	
-    		     	
-    		   			
-   	       	
-   	      		
-   	     			
-   	 	    		
-   	 	  	  	
-   		      	
-   		    			
-   			     	
-   			    		
-   			  	  	
-  	       		
-  	     	  	
-  	  	   			`.map(n=>+n),
+        e: w`  		  	 
+  		  		
+  		 	 	
+  		 			
+  		   	  		   	
+  		   	  		  		
+  		   	  		 			
+  		   	  			  	
+  		  	   		  		
+  		  	   			  	
+  		  		  		   	
+  		  		  		 			
+  		 	    		   	
+  		 	    		  		
+  		 	    		 			
+  		 	 	  		  		
+  		 	 	  			  	
+  		 		   		   	
+  		 		   		 			
+  		 			  		   	
+  		 			  		  		
+  		 			  			  	
+  			     		  		
+  			     			  	
+  			  	  		 			`.map(n=>+n),
 
         // l0cket
         // ["vc2c7q", "cmppiq", "tvfkyq", "uphlaw", "6hh8xw", "xwz7ja", "sa23uw", "72umy0"]
-        l: w` 					  		      	   		     			 		 	 
-  		   	 		  		  	 		  	 	  	  		 	 
- 			 	 					  				 	 	  	   	  		 	 
- 				  		  	 	   	 	 	 	  	 	 	     
-   		  	   	 	   	  	   	    		     
-	    		     	   		   			 	  		  	 	 
- 			    	 	     	     		 				 	     
-   			    	  				  	 		 	   	       `
+        l: w` 			 		  		   		  		  	  		   		  		 			 			   	
+ 		   		 		 		 	 			     			     		 	  	 			   	
+ 			 	   			 		  		  		  		 	 		 				  	 			   	
+ 			 	 	 			     		 	    		 		   		    	 			 			
+  		 		  		 	    		 	     			    				    			 			
+ 				    			 			 				 	   		 			 		 	 	  		    	
+ 			  		 		    	  		  	   		  		 			 	 	 			 			
+  		 			  		  	  			 	 	 		 		 	 				  	  		    `
     }
 ) {
     // Get an initial response from the target to kick things off.
@@ -132,20 +132,19 @@ function (
         // - "`NLOCK_UNLOCKED`\nConnection terminated."
         // - "`NLOCK_UNLOCKED` {LOCK}\n`VLOCK_ERROR`\nDenied access by {MANUFACTURER} `N{LOCK}` lock."
         // Only the "Connection terminated" response has "nn" in it.
-        !r[w` 	 		   	 	  			 	  		   	   	`]`nn`;
+        !r[w` 		 		 	 		    	 			 	   		   		 		 	   `]`nn`;
 
         // This happens after the loop body below.
         // Gets the appropriate key array for the current lock,
         // and brute forces the lock.
-        z = (a[4] ? p[a[0]] || 
-             [
+        z = (a[4] ? p[a[0]] || [
                 +a[3] ?
 
                 // c003_triad_x or c002_complement
-                c[c.indexOf(z) + (a[11]|4)]
+                c[c[w` 		 	  	 		 			  		  	   		  	 	 				    	  				 		  		 `](z) + (a[11]|4)]
 
                 // color_digit
-                : z[w` 	 	 	  			  	 			 	     			 	 	   	`]
+                : z[w` 		 		   		  	 	 		 			  		  			 			 	   		 	   `]
             ]
 
             // c00x
@@ -155,11 +154,11 @@ function (
         // the current lock/parameter, and short-circuits once
         // it finds the correct value.
         // Only the "is not the correct {PARAMETER}" message contains "th".
-        ).find(v => !(p[a] = v, r = t(p))[w` 	 		   	 	  			 	  		   	   	`]`th`)
+        ).find(v => !(p[a] = v, r = t(p))[w` 		 		 	 		    	 			 	   		   		 		 	   `]`th`)
     )
         // Find the last blue-colored word in the last line of output.
         // This should be the name of the next lock/parameter to crack,
         // but will throw an exception if the loc no longer exists or
         // is currently breached.
-        [,a] = r[w` 	 		   	 	  			 	  		   	   	`]`N(\\w+).*$`
+        [,a] = r[w` 		 		 	 		    	 			 	   		   		 		 	   `](w` 	  			   	 	    	 			   			 			  	 	 		  	 	  	  	 			   	 	 	   	  	  `)
 }
