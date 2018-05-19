@@ -31,15 +31,19 @@ function (
     // Key for previous cracked lock/parameter
     z,
 
+    // Name of the current lock/parameter being cracked
+    l,
+
     // Response from target
-    r,
+    // Initialized to bogus "response" that won't cause loop body regex to throw an exception
+    r = 'N_',
 
     // Template string tag function that decodes whitespace into an array of "normal" strings.
     w = s => s[0].replace(/./g, c => c < ' ' | 0).replace(/.{8}/g, c => String.fromCharCode('0b' + c)).split`
 `,
 
     // Template string tag function that decodes whitespace into an array of numbers.
-    m = x => w(x).map(n => +n),
+    n = x => w(x).map(n => +n),
 
     // Colors
     // ["red", "orange", "yellow", "lime", "green", "cyan", "blue", "purple",
@@ -59,20 +63,28 @@ function (
  		  			 			  	  		  	 	 		  	 	 		 			 
  		   		 				  	 		    	 		 			 
  		   	  		 		   			 	 	 		  	 	
- 			     			 	 	 			  	  			     		 		   		  	 	`,
+ 			     			 	 	 			  	  			     		 		   		  	 	`
+) {
+    for (;
+        // After any single lock has been cracked, `r` will be either:
+        // - "`NLOCK_UNLOCKED`\nConnection terminated."
+        // - "`NLOCK_UNLOCKED` {LOCK}\n`VLOCK_ERROR`\nDenied access by {MANUFACTURER} `N{LOCK}` lock."
+        // Only the "Connection terminated" response has "nn" in it.
+        !r[w` 		 		 	 		    	 			 	   		   		 		 	   `]`nn`;
 
-    // Parameters/passphrases for lock;
-    // Storage for lock key collections
-    p = {
-        // EZ_21, EZ_35, EZ_40
-        // ["release", "open", "unlock"]
-        E: w` 			  	  		  	 	 		 		   		  	 	 		    	 			  		 		  	 	
+        // This happens after the loop body below.
+        // Gets the appropriate key array for the current lock,
+        // and brute forces the lock.
+        z = (l[4] ? {
+            // EZ_21, EZ_35, EZ_40
+            // ["release", "open", "unlock"]
+            E: w` 			  	  		  	 	 		 		   		  	 	 		    	 			  		 		  	 	
  		 				 			     		  	 	 		 			 
  			 	 	 		 			  		 		   		 				 		   		 		 	 		`,
 
-        // digit (EZ_35)
-        // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        d: m`  		    
+            // digit (EZ_35)
+            // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            d: n`  		    
   		   	
   		  	 
   		  		
@@ -83,9 +95,9 @@ function (
   			   
   			  	`,
 
-        // ez_prime (EZ_40)
-        // [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
-        e: m`  		  	 
+            // ez_prime (EZ_40)
+            // [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+            e: n`  		  	 
   		  		
   		 	 	
   		 			
@@ -111,9 +123,9 @@ function (
   			     			  	
   			  	  		 			`,
 
-        // l0cket
-        // ["vc2c7q", "cmppiq", "tvfkyq", "uphlaw", "6hh8xw", "xwz7ja", "sa23uw", "72umy0"]
-        l: w` 			 		  		   		  		  	  		   		  		 			 			   	
+            // l0cket
+            // ["vc2c7q", "cmppiq", "tvfkyq", "uphlaw", "6hh8xw", "xwz7ja", "sa23uw", "72umy0"]
+            l: w` 			 		  		   		  		  	  		   		  		 			 			   	
  		   		 		 		 	 			     			     		 	  	 			   	
  			 	   			 		  		  		  		 	 		 				  	 			   	
  			 	 	 			     		 	    		 		   		    	 			 			
@@ -121,26 +133,11 @@ function (
  				    			 			 				 	   		 			 		 	 	  		    	
  			  		 		    	  		  	   		  		 			 	 	 			 			
   		 			  		  	  			 	 	 		 		 	 				  	  		    `
-    }
-) {
-    // Bogus "response" that won't cause loop body regex to throw an exception
-    r = 'N_'
+        }[l[0]] || [
+                +l[3] ?
 
-    for (;
-        // After any single lock has been cracked, `r` will be either:
-        // - "`NLOCK_UNLOCKED`\nConnection terminated."
-        // - "`NLOCK_UNLOCKED` {LOCK}\n`VLOCK_ERROR`\nDenied access by {MANUFACTURER} `N{LOCK}` lock."
-        // Only the "Connection terminated" response has "nn" in it.
-        !r[w` 		 		 	 		    	 			 	   		   		 		 	   `]`nn`;
-
-        // This happens after the loop body below.
-        // Gets the appropriate key array for the current lock,
-        // and brute forces the lock.
-        z = (c[4] ? p[c[0]] || [
-                +c[3] ?
-
-                // c003_triad_x or c002_complement
-                k[k[w` 		 	  	 		 			  		  	   		  	 	 				    	  				 		  		 `](z) + (c[11]|4)]
+                // c002_complement; c003_triad_x
+                k[k[w` 		 	  	 		 			  		  	   		  	 	 				    	  				 		  		 `](z) + (l[11]|4)]
 
                 // color_digit
                 : z[w` 		 		   		  	 	 		 			  		  			 			 	   		 	   `]
@@ -153,11 +150,11 @@ function (
         // the current lock/parameter, and short-circuits once
         // it finds the correct value.
         // Only the "is not the correct {PARAMETER}" message contains "th".
-        ).find(v => !(p[c] = v, r = a.t.call(p))[w` 		 		 	 		    	 			 	   		   		 		 	   `]`th`)
+        ).find(v => !(c[l] = v, r = a.t.call(c))[w` 		 		 	 		    	 			 	   		   		 		 	   `]`th`)
     )
         // Find the last blue-colored word in the last line of output.
         // This should be the name of the next lock/parameter to crack,
         // but will throw an exception if the loc no longer exists or
         // is currently breached.
-        [,c] = r[w` 		 		 	 		    	 			 	   		   		 		 	   `](w` 	  			   	 	    	 			   			 			  	 	 		  	 	  	  	 			   	 	 	   	  	  `)
+        [,l] = r[w` 		 		 	 		    	 			 	   		   		 		 	   `](w` 	  			   	 	    	 			   			 			  	 	 		  	 	  	  	 			   	 	 	   	  	  `)
 }
