@@ -31,12 +31,8 @@ function (
     // Key for previous cracked lock/parameter
     z,
 
-    // Args;
     // Response from target
     r,
-
-    // Target loc to crack
-    t = r.t.call,
 
     // Template string tag function that decodes whitespace into an array of "normal" strings.
     w = s => s[0].replace(/./g, c => c < ' ' | 0).split`
@@ -45,7 +41,7 @@ function (
     // Colors
     // ["red", "orange", "yellow", "lime", "green", "cyan", "blue", "purple",
     //  "red", "orange", "yellow", "lime", "green", "cyan", "blue", "purple"]
-    c = w` 			  	  		  	 	 		  	  
+    k = w` 			  	  		  	 	 		  	  
  		 				 			  	  		    	 		 			  		  			 		  	 	
  				  	 		  	 	 		 		   		 		   		 				 			 			
  		 		   		 	  	 		 		 	 		  	 	
@@ -124,8 +120,8 @@ function (
   		 			  		  	  			 	 	 		 		 	 				  	  		    `
     }
 ) {
-    // Get an initial response from the target to kick things off.
-    r = t(p)
+    // Bogus "response" that won't cause loop body regex to throw an exception
+    r = 'N_'
 
     for (;
         // After any single lock has been cracked, `r` will be either:
@@ -137,28 +133,28 @@ function (
         // This happens after the loop body below.
         // Gets the appropriate key array for the current lock,
         // and brute forces the lock.
-        z = (a[4] ? p[a[0]] || [
-                +a[3] ?
+        z = (c[4] ? p[c[0]] || [
+                +c[3] ?
 
                 // c003_triad_x or c002_complement
-                c[c[w` 		 	  	 		 			  		  	   		  	 	 				    	  				 		  		 `](z) + (a[11]|4)]
+                k[k[w` 		 	  	 		 			  		  	   		  	 	 				    	  				 		  		 `](z) + (c[11]|4)]
 
                 // color_digit
                 : z[w` 		 		   		  	 	 		 			  		  			 			 	   		 	   `]
             ]
 
             // c00x
-            : c
+            : k
 
         // Cracking function - tries each value in an array for
         // the current lock/parameter, and short-circuits once
         // it finds the correct value.
         // Only the "is not the correct {PARAMETER}" message contains "th".
-        ).find(v => !(p[a] = v, r = t(p))[w` 		 		 	 		    	 			 	   		   		 		 	   `]`th`)
+        ).find(v => !(p[c] = v, r = a.t.call(p))[w` 		 		 	 		    	 			 	   		   		 		 	   `]`th`)
     )
         // Find the last blue-colored word in the last line of output.
         // This should be the name of the next lock/parameter to crack,
         // but will throw an exception if the loc no longer exists or
         // is currently breached.
-        [,a] = r[w` 		 		 	 		    	 			 	   		   		 		 	   `](w` 	  			   	 	    	 			   			 			  	 	 		  	 	  	  	 			   	 	 	   	  	  `)
+        [,c] = r[w` 		 		 	 		    	 			 	   		   		 		 	   `](w` 	  			   	 	    	 			   			 			  	 	 		  	 	  	  	 			   	 	 	   	  	  `)
 }
