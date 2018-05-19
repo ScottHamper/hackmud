@@ -35,8 +35,11 @@ function (
     r,
 
     // Template string tag function that decodes whitespace into an array of "normal" strings.
-    w = s => s[0].replace(/./g, c => c < ' ' | 0).split`
-`.map(w => w.replace(/.{8}/g, c => String.fromCharCode('0b' + c))),
+    w = s => s[0].replace(/./g, c => c < ' ' | 0).replace(/.{8}/g, c => String.fromCharCode('0b' + c)).split`
+`,
+
+    // Template string tag function that decodes whitespace into an array of numbers.
+    m = x => w(x).map(n => +n),
 
     // Colors
     // ["red", "orange", "yellow", "lime", "green", "cyan", "blue", "purple",
@@ -69,7 +72,7 @@ function (
 
         // digit (EZ_35)
         // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        d: w`  		    
+        d: m`  		    
   		   	
   		  	 
   		  		
@@ -78,11 +81,11 @@ function (
   		 		 
   		 			
   			   
-  			  	`.map(n=>+n),
+  			  	`,
 
         // ez_prime (EZ_40)
         // [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
-        e: w`  		  	 
+        e: m`  		  	 
   		  		
   		 	 	
   		 			
@@ -106,7 +109,7 @@ function (
   		 			  			  	
   			     		  		
   			     			  	
-  			  	  		 			`.map(n=>+n),
+  			  	  		 			`,
 
         // l0cket
         // ["vc2c7q", "cmppiq", "tvfkyq", "uphlaw", "6hh8xw", "xwz7ja", "sa23uw", "72umy0"]
